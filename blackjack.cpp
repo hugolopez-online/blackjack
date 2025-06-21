@@ -17,6 +17,7 @@ void finalResult(bool reveal);
 const int CARD_AMOUNT = 13;
 int cards[CARD_AMOUNT] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
 int limit = 21;
+bool keep_playing = true;
 
 std::vector<int> dealer_hand;
 std::vector<int> client_hand;
@@ -28,6 +29,8 @@ int main() {
     bool play = false;
 
     // init game
+
+    std::cout << "\n=====================\nLet's play BlackJack!\n=====================\n" << std::endl;
 
     for (int deal = 0; deal < 2; deal++) {
         dealCard(dealer_hand);
@@ -57,6 +60,22 @@ int main() {
 
     std::cout << displayHands(play) << std::endl;
     finalResult(play);
+
+    std::string play_again = input("Do you want to play again? (y/n): ");
+
+    if (play_again != "y") {
+        keep_playing = false;
+    }
+
+    for (int i = 0; i < 50; i++) {
+        std::cout << std::endl;
+    }
+
+    while (keep_playing) {
+        dealer_hand = {};
+        client_hand = {};
+        main();
+    }
 
     return 0;
 }
@@ -122,10 +141,10 @@ void finalResult(bool reveal) {
     std::cout << "You drew " << client_draw << std::endl;
 
     if (underLimit(client_hand) && (dealer_draw < client_draw || !underLimit(dealer_hand))) {
-        std::cout << "\nYou win!" << std::endl;
+        std::cout << "\n========\nYou win!\n========\n" << std::endl;
     } else if (dealer_draw == client_draw) {
-        std::cout << "\nIt's a draw!" << std::endl;
+        std::cout << "\n============\nIt's a draw!\n============\n" << std::endl;
     } else {
-        std::cout << "\nYou lose!" << std::endl;
+        std::cout << "\n=========\nYou lose!\n=========\n" << std::endl;
     }
 }
